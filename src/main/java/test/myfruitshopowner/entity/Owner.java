@@ -1,5 +1,6 @@
 package test.myfruitshopowner.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -12,6 +13,6 @@ import lombok.EqualsAndHashCode;
 public class Owner extends User{
     @Column(nullable = false, length = 100)
     private String shopName;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST})
     private BankAccount bankAccount;
 }

@@ -10,6 +10,9 @@ spring:
       ddl-auto: update
     show-sql: true
     generate-ddl: true
-server:
-  servlet:
-    context-path: /my-fruit-shop-owner/owner/
+  webflux:
+    base-path: /my-fruit-shop-owner/owner/
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
