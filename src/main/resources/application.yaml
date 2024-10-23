@@ -1,18 +1,12 @@
 spring:
   application:
     name: my-fruit-shop-owner
-  r2dbc:
+  datasource:
     username: root
     password: 1234
-    url: r2dbc:mysql://localhost:3306/my-fruit
+    url: jdbc:mysql://localhost:3306/my-fruit
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
     generate-ddl: true
-  webflux:
-    base-path: /my-fruit-shop-owner/owner/
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
-      - org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
