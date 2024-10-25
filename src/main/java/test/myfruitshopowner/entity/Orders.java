@@ -1,20 +1,18 @@
 package test.myfruitshopowner.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Entity
+@Table("orders")
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Transient
     private Long id;
-    @Column(nullable = false, length = 100)
-    private String name;
-    @Column(nullable = false)
+    private Product product;
     private Long number;
-    @ManyToOne
     private Owner owner;
-    @ManyToOne
-    private Supplier supplier;
+    private Long supplierId;
 }

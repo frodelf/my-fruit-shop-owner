@@ -1,22 +1,22 @@
 package test.myfruitshopowner.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 
 @Data
-@Entity
+@Table("product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Transient
     private Long id;
-    @Column(length = 100, nullable = false)
     private String name;
-    @Column(nullable = false)
     private Long number;
-    @Column(nullable = false)
+    @Column("price_per_piece")
     private BigDecimal pricePerPiece;
-    @ManyToOne
-    private User user;
+    private Long userId;
 }

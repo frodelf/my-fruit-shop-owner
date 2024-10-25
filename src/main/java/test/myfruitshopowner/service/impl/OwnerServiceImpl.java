@@ -1,6 +1,5 @@
 package test.myfruitshopowner.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,6 @@ public class OwnerServiceImpl implements OwnerService {
         return ownerRepository.count();
     }
     @Override
-    @Transactional
     public Mono<Owner> save(Owner owner) {
         return ownerRepository.save(owner);
     }

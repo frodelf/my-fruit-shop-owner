@@ -1,0 +1,43 @@
+DELIMITER //
+
+CREATE TRIGGER before_insert_owner
+BEFORE INSERT ON owner
+FOR EACH ROW
+BEGIN
+    DECLARE nextId BIGINT;
+
+    -- Отримати наступне значення з user_seq
+    SELECT next_val INTO nextId FROM user_seq;
+
+    -- Присвоїти значення id новому запису
+    SET NEW.id = nextId;
+
+    -- Збільшити значення next_val у таблиці user_seq на 1
+    UPDATE user_seq SET next_val = next_val + 1;
+END;
+
+//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER before_insert_supplier
+BEFORE INSERT ON supplier
+FOR EACH ROW
+BEGIN
+    DECLARE nextId BIGINT;
+
+    -- Отримати наступне значення з user_seq
+    SELECT next_val INTO nextId FROM user_seq;
+
+    -- Присвоїти значення id новому запису
+    SET NEW.id = nextId;
+
+    -- Збільшити значення next_val у таблиці user_seq на 1
+    UPDATE user_seq SET next_val = next_val + 1;
+END;
+
+//
+
+DELIMITER ;

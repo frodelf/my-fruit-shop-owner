@@ -1,19 +1,22 @@
 package test.myfruitshopowner.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 import test.myfruitshopowner.entity.enums.StatusHistory;
 
-@Entity
 @Data
+@Table("history")
 public class History {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Transient
     private Long id;
-    @Column(nullable = false)
     private StatusHistory status;
-    @Column(length = 1000, nullable = false)
-    private String message;
-    @ManyToOne
-    private User user;
+    @Column("product_name")
+    private String productName;
+    @Column("number_of_product")
+    private Long numberOfProduct;
+    private Long userId;
 }

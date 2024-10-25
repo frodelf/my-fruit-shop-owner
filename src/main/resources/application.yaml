@@ -5,6 +5,9 @@ spring:
     username: root
     password: 1234
     url: r2dbc:mysql://localhost:3306/my-fruit
+  sql:
+    init:
+      mode: always
   jpa:
     hibernate:
       ddl-auto: update
@@ -12,7 +15,3 @@ spring:
     generate-ddl: true
   webflux:
     base-path: /my-fruit-shop-owner/owner/
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
-      - org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration

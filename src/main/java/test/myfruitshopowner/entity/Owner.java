@@ -1,18 +1,19 @@
 package test.myfruitshopowner.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+import test.myfruitshopowner.entity.enums.DType;
 
 @Data
-@Entity
+@Table("user")
 @EqualsAndHashCode(callSuper = true)
 public class Owner extends User{
-    @Column(nullable = false, length = 100)
+    @Column("shop_name")
     private String shopName;
-    @OneToOne(cascade = {CascadeType.PERSIST})
-    private BankAccount bankAccount;
+    private Long bankAccountId;
+    public Owner() {
+        this.setDtype(DType.OWNER);
+    }
 }

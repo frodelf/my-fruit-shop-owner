@@ -1,26 +1,25 @@
 package test.myfruitshopowner.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+import test.myfruitshopowner.entity.enums.DType;
 
+@Table("user")
 @Data
-@Entity
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(length = 100)
+    private DType dtype;
+    @Column("last_name")
     private String lastName;
-    @Column(length = 100)
     private String name;
-    @Column(length = 100)
+    @Column("middle_name")
     private String middleName;
-    @Column(length = 100)
     private String phone;
-    @Column(length = 100)
     private String email;
-    @Column(length = 100)
     private String telegram;
-    @Column(length = 100, nullable = false)
     private String password;
 }
