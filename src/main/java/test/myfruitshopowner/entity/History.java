@@ -8,7 +8,7 @@ import test.myfruitshopowner.entity.enums.StatusHistory;
 @Data
 public class History {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(nullable = false)
     private StatusHistory status;
