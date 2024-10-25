@@ -3,12 +3,13 @@ package test.myfruitshopowner.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Entity
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Long id = Math.abs(UUID.randomUUID().getMostSignificantBits());
     @Column(nullable = false, length = 100)
     private String name;
     @Column(nullable = false)
