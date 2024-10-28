@@ -2,7 +2,6 @@ package test.myfruitshopowner.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import test.myfruitshopowner.entity.enums.StatusHistory;
@@ -11,7 +10,6 @@ import test.myfruitshopowner.entity.enums.StatusHistory;
 @Table("history")
 public class History {
     @Id
-    @Transient
     private Long id;
     private StatusHistory status;
     @Column("product_name")

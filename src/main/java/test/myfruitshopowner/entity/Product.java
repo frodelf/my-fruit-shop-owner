@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Table("product")
 public class Product {
     @Id
-    @Transient
     private Long id;
     private String name;
     private Long number;

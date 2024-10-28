@@ -34,12 +34,10 @@ public class Initializer implements CommandLineRunner {
                                     owner.setEmail("ivan@gmail.com");
                                     owner.setTelegram("@ivan_tg");
                                     owner.setShopName("ЛьонОк");
+//                                    owner.setPassword(passwordEncoder.encode("password"));
                                     owner.setPassword(passwordEncoder.encode("password"));
-                                    return ownerService.save(owner)
-                                            .flatMap(savedOwner -> {
-                                                savedOwner.setBankAccountId(savedBankAccount.getId());
-                                                return ownerService.save(savedOwner);
-                                            });
+                                    owner.setBankAccountId(savedBankAccount.getId());
+                                    return ownerService.save(owner);
                                 }).then();
                     }
                     return Mono.empty();

@@ -12,9 +12,6 @@ public class BankAccountServiceImpl implements BankAccountService {
     private final BankAccountRepository bankAccountRepository;
     @Override
     public Mono<BankAccount> save(BankAccount bankAccount) {
-        return bankAccountRepository.save(bankAccount)
-                .doOnNext(savedAccount -> {
-                    System.out.println("Saved BankAccount: " + savedAccount.getId());
-                });
+        return bankAccountRepository.save(bankAccount);
     }
 }
