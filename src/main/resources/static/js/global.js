@@ -1,95 +1,5 @@
-var fullContextPath = 'http://slj.demodev.cc:7655/edu-tracker/admin/'
 var messageForDelete = "Об'єкт успішно видалено"
 var messageForSave = "Об'єкт успішно збережено"
-var pageSize = 10
-var nameForAvatar = managerAuth ?
-    (managerAuth.lastName && managerAuth.name
-            ? managerAuth.lastName.charAt(0) + managerAuth.name.charAt(0)
-            : managerAuth.lastName
-                ? managerAuth.lastName.charAt(0)
-                : managerAuth.name
-                    ? managerAuth.name.charAt(0)
-                    : null
-    )
-    : null;
-
-$(document).ready(function () {
-    var inputForFilter = $('.for-filter')
-    let timeout = null
-    $('#clean-all-input-for-filtering').click(function () {
-        inputForFilter.val('')
-        if (inputForFilter.is('[type="checkbox"]')) {
-            inputForFilter.prop('checked', false)
-        }
-        getPageWithFilter(0)
-    })
-    inputForFilter.each(function() {
-        $(this).on('input', function () {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                getPageWithFilter(0);
-            }, 500);
-        });
-    })
-    $(".phone").each(function (index, element) {
-        new Cleave("#" + element.id, {
-            blocks: [13],
-            numericOnly: true,
-            prefix: "+380"
-        })
-    })
-    $('.onlyNumber').on('input', function () {
-        $(this).val(function (_, value) {
-            return value.replace(/[^\d.]+/g, '').replace(/^(\d*\.\d*)\..*$/, '$1')
-        })
-    })
-    $('.flatpickr').flatpickr({
-        dateFormat: "d.m.Y"
-    })
-    autosize($(".autosize"))
-
-    var isAuthenticated = false
-    document.addEventListener('click', function (event) {
-        var currentUrl = window.location.href;
-        currentUrl = currentUrl.replace(fullContextPath, '')
-        var redirectUrl = contextPath + currentUrl
-        setCookie("redirect-url-admin", redirectUrl)
-        if (isAuthenticated) return
-        $.ajax({
-            url: fullContextPath + 'checkAuth',
-            method: 'GET',
-            success: function (response) {
-                if (response) {
-                    isAuthenticated = true
-
-                } else {
-                    window.location.href = fullContextPath + 'login';
-                }
-            },
-            error: function () {
-                $('#authStatus').text('Error checking authentication');
-            }
-        })
-    })
-
-    $.ajax({
-        url: contextPath + 'minio/get-image',
-        method: 'GET',
-        data:{
-            imageName: managerAuth.image
-        },
-        success: function (response) {
-            if(response){
-                $(".avatar-image").attr("src", response)
-            }
-            else {
-                $('.avatar').html(`
-                     <span class="avatar-initial rounded-circle bg-primary">${nameForAvatar}</span>
-                `)
-            }
-        },
-    })
-})
 
 function showLoader(blockId) {
     $("#" + blockId).block({
@@ -143,32 +53,6 @@ function showToastForSave() {
     toastr.success(messageForSave)
 }
 
-function previewImage(imgId, inputId) {
-    const img = document.getElementById(imgId);
-    const input = document.getElementById(inputId);
-    const file = input.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-function setImage(imageName, imageBlock) {
-    $.ajax({
-        type: "Get",
-        url: contextPath + 'minio/get-image',
-        data: {
-            imageName: imageName
-        },
-        success: function (url) {
-            $("#" + imageBlock).attr("src", url)
-        }
-    })
-}
-
 var countError = 0;
 
 function validDataFromResponse(errors) {
@@ -183,20 +67,6 @@ function validDataFromResponse(errors) {
     }
     countError = 0
 }
-
-function scrollToElement($element) {
-    if (countError !== 0) return
-    countError++
-    if ($element.length > 0) {
-        var windowHeight = $(window).height();
-        var targetOffset = $element.offset().top - windowHeight / 4;
-
-        $('html, body').animate({
-            scrollTop: targetOffset
-        }, 100);
-    }
-}
-
 function addText(input, message) {
     message = translateError(message)
     var icon = $('<p class="text-for-validating" style="color: #ff0000;">' + message + '</p>')
@@ -252,90 +122,6 @@ function translateError(key) {
         .replace('The telegram already exists!', 'Такий телеграм вже існує')
         .replace('The email already exists!', 'Такий електроний адрес вже існує')
 }
-
-function cleanInputs() {
-    $('.text-for-validating').remove()
-    var elements = document.querySelectorAll('input, select, textarea, button, .ql-editor,form');
-    for (var i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        element.style.borderColor = '';
-    }
-    var select2Selects = document.querySelectorAll('.select2-selection');
-    for (var i = 0; i < select2Selects.length; i++) {
-        var select2Select = select2Selects[i];
-        select2Select.style.borderColor = '';
-    }
-    $("#goal").css("border", "")
-}
-function forSelect2(selectId, url, id, text) {
-    $(selectId).select2({
-        width: '100%',
-        placeholder: "виберіть об'єкт",
-        ajax: {
-            type: "Get",
-            url: url,
-            processResults: function (data) {
-                var results = Object.keys(data).map(function (key) {
-                    return {id: key, text: translateTest(data[key])};
-                });
-                return {
-                    results: results
-                }
-            },
-        },
-        minimumResultsForSearch: Infinity
-    })
-    if (text && id) {
-        $(selectId).append(new Option(text.toString(), id.toString(), true, true));
-        $(selectId).trigger('change');
-    }
-}
-
-function forSelect2WithSearchAndPageable(selectId, url, id, text) {
-    $(selectId).select2({
-        ajax: {
-            type: "Get",
-            url: url,
-            dataType: 'json',
-            data: function (params) {
-                var number = params.page > 0 ? params.page - 1 : 0
-                return {
-                    query: params.term || '',
-                    page: number,
-                    size: 10
-                };
-            },
-            processResults: function (data) {
-                var results = data.content.map(obj => {
-                    const key = Object.keys(obj)[0];
-                    const value = obj[key]
-                    return {id: key, text: value};
-                })
-                var hasMore = data.totalPages > data.number
-                return {
-                    results: results,
-                    pagination: {
-                        more: hasMore
-                    }
-                }
-            },
-        }
-    });
-    if (text && id) {
-        $(selectId).append(new Option(text.toString(), id.toString(), true, true));
-        $(selectId).trigger('change');
-    }}
-
-function validSelect2(select) {
-    if (!select.val() || (Array.isArray(select.val()) && select.val().length === 0)) {
-        scrollToElement(select)
-        select.next().find(".select2-selection").css("border", "1px solid #ff0000");
-        addText(select.next().find(".select2-selection"), "Елемент має бути вибрано");
-        return false;
-    }
-    return true
-}
-
 function translateTest(text) {
     if (text == "CLOSE") text = "Закрите"
     if (text == "OPEN") text = "Відкрите"
@@ -343,28 +129,6 @@ function translateTest(text) {
     if (text == "FINISHED") text = "Завершено"
     return text
 }
-
-function changeFormatDate(inputDate) {
-    if (!inputDate) return inputDate
-    const date = new Date(inputDate);
-
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
-}
-
-function setCookie(name, value) {
-    var expirationTime = 24 * 60 * 60 * 1000
-    var date = new Date()
-    date.setTime(date.getTime() + expirationTime)
-    var expires = "expires=" + date.toUTCString()
-    document.cookie = name + "=" + value + ";" + expires + ";path=/"
-}
-
 function modalForRemoveObject(objectId, urlForRemove) {
     if ($('#modalForRemove').html()) $('#modalForRemove').remove()
 
@@ -386,24 +150,4 @@ function modalForRemoveObject(objectId, urlForRemove) {
     `
     document.body.appendChild(modalBlock)
     $('#modalForRemove').modal('show')
-}
-
-function removeObject(objectId, urlForRemove) {
-    showLoader("modalForRemove")
-    $.ajax({
-        url: contextPath + urlForRemove,
-        type: 'DELETE',
-        headers: {'X-XSRF-TOKEN': csrf_token},
-        data: {
-            id: objectId
-        },
-        success: function (request) {
-            getPageWithFilter(page)
-            showToastForDelete()
-            $('#modalForRemove').modal('hide')
-        },
-        complete: function (xhr, status) {
-            hideLoader("modalForRemove")
-        }
-    })
 }

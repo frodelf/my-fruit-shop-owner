@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-navbar-fixed layout-menu-fixed"
+      layout:decorate="~{blocks/layout.html}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна😂</title>
+    <script th:src="@{/js/main/index.js}"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="row g-4 mb-3 mt-1">
+        <div class="col-lg-3 col-md-6 col-sm-12"></div>
+        <div class="col-lg-3 col-md-6 col-sm-12"></div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <button class="btn btn-primary float-end" style="width: 100%">Скласти замовлення</button>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <button class="btn btn-primary float-end" style="width: 100%">Знайти поставщика</button>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-3 mt-1">
+        <div class="col-lg-9 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <center><h1>Товари на складі</h1></center>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped linkedRow" id="product-table"
+                               style="    table-layout: fixed;">
+                            <thead>
+                            <tr>
+                                <th style="width: 100px">Назва</th>
+                                <th style="width: 200px">Поточна к-сть</th>
+                                <th style="width: 200px">Поставщик</th>
+                                <th style="width: 200px">Остання операція</th>
+                            </tr>
+                            <tr>
+                                <th><input class="form-control for-filter"></th>
+                                <th><input class="form-control for-filter"></th>
+                                <th><input class="form-control for-filter"></th>
+                                <th><input class="form-control for-filter"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 mb-3 mt-1">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover table-striped linkedRow">
+                                <tr>
+                                    <th style="font-size: 10px">фщхшвжа ідшваиділоамілоаимпілгр лоиав іо</th>
+                                </tr>
+                                <tr>
+                                    <th style="font-size: 10px">фщхшвжа ідшваиділоамілоаимпілгр лоиав іо</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <center><h2>Банк</h2></center>
+                            <p><strong>Баланс: </strong>1500</p>
+                            <div class="row">
+                                <div class="col-6"><input class="form-control"></div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button class="btn btn-success" style="width: 100%">Поповнити</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-warning" style="width: 100%">Зняти</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-6">
+                                    <button class="btn btn-primary" style="width: 100%">Завантажити декларацію</button>
+                                </div>
+                                <div class="col-6"><p>Сьогодні завантажено: 2шт</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered table-hover table-striped linkedRow">
+                        <tr>
+                            <th style="font-size: 10px; color: red">фщхшвжа ідшваиділоамілоаимпілгр лоиав іо</th>
+                        </tr>
+                        <tr>
+                            <th style="font-size: 10px; color: #43cf43">фщхшвжа ідшваиділоамілоаимпілгр лоиав іо</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
