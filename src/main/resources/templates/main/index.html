@@ -25,7 +25,14 @@
         <div class="col-lg-9 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <center><h1>Товари на складі</h1></center>
+                    <div style="display: flex; align-items: center; position: relative;" class="mb-3">
+                        <input class="form-control" placeholder="Пошук" style="flex: 0 0 auto; width: 20%" id="product-search"/>
+
+                        <div style="position: absolute; left: 50%; transform: translateX(-50%);">
+                            <h1 style="margin: 0; text-align: center;">Товари на складі</h1>
+                        </div>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover table-striped linkedRow" id="product-table"
                                style="    table-layout: fixed;">
@@ -34,19 +41,19 @@
                                 <th style="width: 100px">Назва</th>
                                 <th style="width: 200px">Поточна к-сть</th>
                                 <th style="width: 200px">Поставщик</th>
+                                <th style="width: 200px">Дія</th>
                                 <th style="width: 200px">Остання операція</th>
-                            </tr>
-                            <tr>
-                                <th><input class="form-control for-filter"></th>
-                                <th><input class="form-control for-filter"></th>
-                                <th><input class="form-control for-filter"></th>
-                                <th><input class="form-control for-filter"></th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <ul class="pagination pagination-sm m-0 mt-1" style="display: flex; justify-content: flex-end"
+                        id="pagination_container">
+                    </ul>
                 </div>
             </div>
             <div class="row g-4 mb-3 mt-1">

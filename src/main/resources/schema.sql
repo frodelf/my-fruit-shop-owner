@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS product (
                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
                          name VARCHAR(100) NOT NULL,
                          number BIGINT NOT NULL,
-                         price_per_piece DECIMAL(19, 4) NOT NULL,
+                         price_per_piece DECIMAL(19, 2) NOT NULL,
                          user_id BIGINT,
                          FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL
 );
@@ -39,12 +39,12 @@ CREATE TABLE IF NOT EXISTS orders (
                         FOREIGN KEY (owner_id) REFERENCES user(id) ON DELETE SET NULL,
                         FOREIGN KEY (supplier_id) REFERENCES user(id) ON DELETE SET NULL
 );
-
 CREATE TABLE IF NOT EXISTS history (
-                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                         status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
-                         product_name VARCHAR(100) NOT NULL,
-                         number_of_product BIGINT,
-                         user_id BIGINT,
-                         FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL
-);
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    status ENUM('ERROR', 'SUCCESS') NOT NULL,
+    product_id BIGINT,
+    number_of_product BIGINT,
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL,
+    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE SET NULL
+    );

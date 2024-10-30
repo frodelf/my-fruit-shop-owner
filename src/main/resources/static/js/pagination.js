@@ -1,4 +1,5 @@
 var currentPage;
+var pageSize = 10;
 
 function updatePagination(currentPage, totalButtons, container) {
     var containerBlock = document.getElementById(container);

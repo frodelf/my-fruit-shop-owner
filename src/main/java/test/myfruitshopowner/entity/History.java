@@ -12,8 +12,8 @@ public class History {
     @Id
     private Long id;
     private StatusHistory status;
-    @Column("product_name")
-    private String productName;
+    @Column("product_id")
+    private Long productId;
     @Column("number_of_product")
     private Long numberOfProduct;
     private Long userId;
