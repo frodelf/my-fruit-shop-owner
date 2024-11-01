@@ -42,12 +42,24 @@ function getPageWithFilter(page) {
                 cell1.innerHTML = `${object.number}`;
 
                 var cell2 = newRow.insertCell(2);
-                cell2.innerHTML = `courses`;
-
-                var cell3 = newRow.insertCell(3);
-                cell3.innerHTML = Object.entries(object.owner).map(([key, value]) => {
+                cell2.innerHTML = Object.entries(object.owner).map(([key, value]) => {
                     return `<a href="javascript:void(0)">${value}</a>`
                 })
+
+                var cell3 = newRow.insertCell(3);
+                cell3.innerHTML = `
+<div class="row g-2" style="margin-right: 15px">
+    <div class="col-lg-6 col-sm-12">
+        <input class="form-control" placeholder="к-во">
+    </div>
+    <div class="col-lg-3 col-sm-12">
+        <button class="btn btn-success">Купить</button> 
+    </div> 
+    <div class="col-lg-3 col-sm-12">
+        <button class="btn btn-warning">Продать</button>  
+    </div>
+</div>`
+
                 var cell4 = newRow.insertCell(4);
                 cell4.innerHTML = `${object.lastOperation}`;
             }

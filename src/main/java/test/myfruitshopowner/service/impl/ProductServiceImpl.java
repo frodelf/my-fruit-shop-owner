@@ -1,8 +1,7 @@
 package test.myfruitshopowner.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -10,6 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import test.myfruitshopowner.dto.FilterDto;
 import test.myfruitshopowner.dto.product.ProductResponseDto;
+import test.myfruitshopowner.entity.Owner;
 import test.myfruitshopowner.mapper.ProductMapper;
 import test.myfruitshopowner.repository.ProductRepository;
 import test.myfruitshopowner.service.HistoryService;
@@ -23,21 +23,21 @@ public class ProductServiceImpl implements ProductService {
     private final HistoryService historyService;
     private final ProductRepository productRepository;
     @Override
-    //TODO Fix it!!
     public Flux<ProductResponseDto> getAll(FilterDto filterDto) {
         return ownerService.getAuthenticatedUserId()
                 .flatMapMany(userId -> {
                     Pageable pageable = PageRequest.of(filterDto.getPage(), filterDto.getPageSize(), Sort.by(Sort.Order.desc("id")));
                     return productRepository.findAllByUserIdAndNameContaining(userId, filterDto.getQuery(), pageable)
                             .flatMap(product ->
-                                    ownerService.getById(product.getUserId())
-                                            .flatMap(owner ->
-                                                    historyService.getLastByProductId(product.getId())
-                                                            .map(history -> ProductMapper.toDto(product, owner, history))
-                                            )
+                                    Mono.zip(
+                                            ownerService.getById(product.getUserId()).defaultIfEmpty(new Owner()),
+                                            historyService.getLastByProductId(product.getId()).defaultIfEmpty("")
+                                    ).map(tuple -> ProductMapper.toDto(product, tuple.getT1(), tuple.getT2()))
                             );
                 });
     }
+
+
 
 
     @Override
